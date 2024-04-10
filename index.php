@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+	<h1>Club de Dance</h1>
 	<?php
 		include("config.php");
 		
-		$req = $bdd->prepare("SELECT id FROM utilisateur");
-		$req->execute([]);
+		// check cookie identifiant sinon afficher lien pour se co
 		
 	?>
+	
+	<!--- a retirer -->
+		<a href="conn_form.php">se connecter</a>
+	<!-- fin a retirer -->
 	<script src="index.js"></script>
   </body>
 </html>
