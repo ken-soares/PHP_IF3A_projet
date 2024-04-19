@@ -3,3 +3,6 @@
 
 Réalisation d'un site permettant aux utilisateurs de s'inscrire à des cours de dance ou de créer de nouveaux cours en réservant des salles
 pour les professeurs.
+
+
+Réalisé en groupe avec [noafouich](https://github.com/noafouich).
