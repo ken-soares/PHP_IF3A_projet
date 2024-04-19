@@ -15,8 +15,10 @@
 	<?php
 		include("config.php");
 		
+		$connecte = false;
 		// check cookie identifiant sinon afficher lien pour se co
 		if(isset($_COOKIE["c_email"]) && isset($_COOKIE["c_password"])) {
+			$connecte = true;
 			$result = $bdd->query("SELECT credits FROM utilisateur WHERE email='".$_COOKIE["c_email"]."' AND mdp = '".$_COOKIE["c_password"]."';");
 			$row = $result->fetch();
 		echo " | Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
@@ -24,10 +26,20 @@
 		} else {
 			echo ' | <a href="form_connexion.php">se connecter</a>';
 		}
-	?>
+		
+		
+		if($connecte && intval($_COOKIE["c_est_admin"]) == 1) {
+			
+			echo "<h3>Options d'Administrateur</h3>";
+			echo "<ul>";		
+			echo '<li><a href="form_permissions.php">Promouvoir/rétrograder un membre</a></li>';
+			echo '<li><a href="form_crediter.php">créditer un compte</a></li>';
+			echo "</ul>";
+		}
+		
+		?>
 	
-	<!--- a retirer -->
-	<!-- fin a retirer -->
+	
 	<script src="index.js"></script>
   </body>
 </html>
