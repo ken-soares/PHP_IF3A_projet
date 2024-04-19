@@ -9,21 +9,13 @@
   </head>
   <body>
 	<h2>Connexion</h2>
-	<form method="GET" name="conn">
-		<input type="text" name="email">
-		<input type="password" name="password">
+	<form method="POST" name="conn" action="action_connexion.php">
+		<input type="text" name="email" placeholder="email">
+		<input type="password" name="password" placeholder="mot de passe">
 		<input type="submit">
 	</form>
 	
-	<h2>Inscription</h2>
-	<form method="POST" name="inscript" action="connection.php">
-		<input type="text" name="nom" placeholder="nom">
-		<input type="text" name="prenom" placeholder="prenom">
-		<input type="text" name="email" placeholder="email">
-		<input type="password" name="password" placeholder="mot de passe">
-		<input type="password" name="password_verif" placeholder="vérification mot de passe">
-		<input type="submit">
-	</form>
+	<a href="./form_inscription.php">pas de compte? S'inscrire</a>
 
 	<script src="index.js"></script>
   </body>

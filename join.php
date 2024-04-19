@@ -9,9 +9,13 @@
   </head>
     <body>
 
-	<?php
-	// lister les cours disponibles
-	?>
-	<script src="index.js"></script>
+    <?php
+    // lister les cours disponibles
+    include("connection.php");
+    foreach($bdd->query("SELECT * from cours") as $row) {
+        echo "<h1>". ."</h1>";
+    }
+    ?>
+    <script src="index.js"></script>
   </body>
 </html>
