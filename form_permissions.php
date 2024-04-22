@@ -12,8 +12,8 @@
 	<h2>Promouvoir/Rétrograder un membre</h2>
 	<form method="POST" name="promo" action="action_permissions.php">
 		<input type="text" name="email" placeholder="email"> <br>
-		<input type="checkbox" name="perm[]"> Admin <br>
-		<input type="checkbox" name="perm[]"> Professeur <br>
+		<input type="checkbox" name="admin"> Admin <br>
+		<input type="checkbox" name="prof"> Professeur <br>
 		<input type="submit">
 	</form>
 

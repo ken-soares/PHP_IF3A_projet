@@ -9,11 +9,6 @@
 		$result = $bdd->query("SELECT * FROM roles WHERE email='".$_POST["email"]."';");
 		$row = $result->fetch();
 		
-
-		setcookie("c_est_prof", "" . $row["est_prof"], 0);
-		setcookie("c_est_admin", "" . $row["est_admin"], 0);
-		
-		
 		echo "Connexion en tant que " . $_POST["email"] . " réussie";
 		header("Location: index.php");
 	}

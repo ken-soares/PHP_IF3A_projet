@@ -27,8 +27,13 @@
 			echo ' | <a href="form_connexion.php">se connecter</a>';
 		}
 		
+		if($connecte) {
+			$result = $bdd->query("SELECT * FROM roles INNER JOIN utilisateur ON utilisateur.email = roles.email WHERE roles.email='".$_COOKIE["c_email"]."' AND mdp='".$_COOKIE["c_password"]."';");
+			$row = $result->fetch();			
+		}
 		
-		if($connecte && intval($_COOKIE["c_est_admin"]) == 1) {
+		
+		if($connecte && intval($row["est_admin"]) == 1) {
 			
 			echo "<h3>Options d'Administrateur</h3>";
 			echo "<ul>";		
@@ -37,7 +42,7 @@
 			echo "</ul>";
 		}
 		
-		if($connecte && intval($_COOKIE["c_est_prof"]) == 1) {
+		if($connecte && intval($row["est_prof"]) == 1) {
 			echo "<h3> Options de Professeur </h3>";
 			echo "<ul>";		
 			echo '<li><a href="">Créer un cours</a></li>';

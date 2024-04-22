@@ -4,18 +4,22 @@
 	
 	  echo "Pour l'utilisateur " . $_POST["email"] . ": ";
 	
-	if(intval($_COOKIE["c_est_admin"])) {
+	
+	$result = $bdd->query("SELECT * FROM roles INNER JOIN utilisateur ON utilisateur.email = roles.email WHERE roles.email='".$_COOKIE["c_email"]."' AND mdp='".$_COOKIE["c_password"]."';");
+	$row = $result->fetch();
+	
+	if(intval($row["est_admin"])) {
 		// ajout/retrait perms admin
-		if(isset($_POST["perm"][0])){
-			echo "admin: " . $_POST["perm"][0];
+		if(isset($_POST["admin"])){
+			echo "admin: " . $_POST["admin"];
 			$bdd->query("UPDATE roles SET est_admin = TRUE WHERE email = '". $_POST["email"]."'");
 		}else{
 			$bdd->query("UPDATE roles SET est_admin = FALSE WHERE email = '". $_POST["email"]."'");
 		}
 		
 		// ajout/retrait perms prof
-		if(isset($_POST["perm"][1])){
-			echo " prof: " . $_POST["perm"][1];
+		if(isset($_POST["prof"])){
+			echo " prof: " . $_POST["prof"];
 			$bdd->query("UPDATE roles SET est_prof = TRUE WHERE email = '". $_POST["email"]."'");
 		}else{
 			$bdd->query("UPDATE roles SET est_prof = FALSE WHERE email = '". $_POST["email"]."'");
