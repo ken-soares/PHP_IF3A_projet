@@ -123,7 +123,7 @@
 			if($connecte && intval($row["est_prof"]) == 1) {
 				echo "<h3> Options de Professeur </h3>";
 				echo "<ul>";		
-				echo '<li><a href="">Créer un cours</a></li>';
+				echo '<li><a href="form_cours.php">Créer un cours</a></li>';
 				echo '<li><a href="">Gérer mes cours</a></li>';
 				echo "</ul>";
 
