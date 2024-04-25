@@ -41,14 +41,15 @@
 		echo "Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
 			echo '<a href="action_deconnexion.php">se deconnecter</a>';
 		} else {
-			echo ' | <a href="form_connexion.php">se connecter</a>';
+			echo '<a href="form_connexion.php">se connecter</a>';
 		}
 		if($connecte) {
 		echo ' | <a href="join.php">mes cours</a>';
 			
-		}
-	?>
 		
+	?>
+	
+		<!--- n'est pas affichée si on est pas connectés --->
 		<h2> Liste des cours ouverts </h2>
 		<table>
 		<tr>
@@ -61,6 +62,7 @@
 		</tr>		
 	<?php
 	
+		}
 		// fonction pour convertir les durées de cours en minutes
 		function minutes($time){
 			$time = explode(':', $time);
@@ -102,7 +104,17 @@
 		
 	?>	
 		</table>
-		
+		<h3><u>Qui est-on?</u></h3>
+		<p>
+			Association de danse crée en 20XX, Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+			In porttitor varius aliquam. Nulla ut imperdiet metus. Proin at dolor suscipit lacus feugiat scelerisque dictum vitae libero.
+			Cras et libero eget sem lacinia laoreet. Vivamus at congue velit, consectetur lobortis erat. Quisque pretium porttitor tristique.
+			Aliquam erat volutpat. Phasellus non odio egestas, mollis eros vitae, ornare lectus.
+			Vestibulum feugiat, metus non pharetra malesuada, risus quam aliquet velit, quis posuere neque lectus cursus elit.
+			Integer in justo rutrum, pulvinar ex nec, commodo elit. Nullam arcu orci, malesuada non suscipit eget, laoreet sit amet sem.
+			Morbi non metus ut ante mollis varius. Sed a odio congue, finibus odio ut, egestas augue.
+			Vivamus facilisis scelerisque nisi, et hendrerit magna efficitur nec.
+		</p>
 		<?php
 			// vérification des rôles pour les options admin et prof
 			if($connecte) {
