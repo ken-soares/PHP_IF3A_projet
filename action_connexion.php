@@ -1,15 +1,16 @@
 <?php
 	include("config.php");
-	
-	$req = $bdd->query("SELECT COUNT(*) FROM utilisateur WHERE email = '".$_POST["email"]."' AND mdp = '".$_POST["password"]."';");
-	if($req == 1) {
-		setcookie("c_email", $_POST["email"], 0);
-		setcookie("c_password", $_POST["password"],0);
+	$email = $_POST["email"];
+	$mdp = $_POST["password"];
+	$req = $bdd->query("SELECT * FROM utilisateur WHERE email = '$email' AND mdp = '$mdp';");
+	if($req->rowCount() == 1) {
+		setcookie("c_email", $email, 0);
+		setcookie("c_password", $mdp,0);
 		
-		echo "Connexion en tant que " . $_POST["email"] . " réussie";
+		echo "Connexion en tant que $email réussie";
 		header("Location: index.php");
 	} else{
 		echo "email ou mot de passe incorrect<br>";
-		echo "<a href='form_inscription.php'> retour à l'inscription </a>";
+		echo "<a href='form_connexion.php'> retour à la connexion </a>";
 	}
 ?>
