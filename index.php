@@ -27,7 +27,6 @@
 	
 	<h1>Club de Dance</h1>
 	
-
 	<?php
 		include("config.php");
 		
@@ -41,28 +40,23 @@
 		echo "Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
 			echo '<a href="action_deconnexion.php">se deconnecter</a>';
 		} else {
-			echo '<a href="form_connexion.php">se connecter</a>';
+			echo ' | <a href="form_connexion.php">se connecter</a>';
 		}
-		if($connecte) {
-		echo ' | <a href="join.php">mes cours</a>';
-			
-		
-	?>
-	
-		<!--- n'est pas affichée si on est pas connectés --->
-		<h2> Liste des cours ouverts </h2>
+		if ($connecte){
+			echo "<h2> Liste des cours ouverts (2 semaines) </h2>
 		<table>
 		<tr>
 			<th>Intitulé</th>
 			<th>professeur</th>
-			<th>date</th>
+			<th>date</th> 
 			<th>horaires</th>
 			<th>coût (en crédits)</th>
-			<th>nombre de places</th>
-		</tr>		
-	<?php
-	
+			<th>salle</th>
+			<th>inscris</th>
+			<th>inscription</th>
+		</tr>";
 		}
+	
 		// fonction pour convertir les durées de cours en minutes
 		function minutes($time){
 			$time = explode(':', $time);
@@ -71,10 +65,9 @@
 		
 		// affichage de la liste des cours
 		if($connecte) {
-			foreach($bdd->query("SELECT * from cours") as $row) {
-				
+			foreach($bdd->query("SELECT * FROM cours WHERE date>=NOW() AND date<=DATE_ADD(NOW(),INTERVAL 14 DAY) ORDER BY date,heure_debut;") as $row) {
 				echo "<tr>";
-				echo "<td>" . $row["titre"] . "</td>";
+				echo "<td> ".$row["titre"]." </td>";
 				
 				// affichage NOM Prenom (email) du professeur
 				$stmt = $bdd->prepare("SELECT nom, prenom FROM utilisateur WHERE email = ?");
@@ -90,32 +83,52 @@
 				}
 				
 				// affichage de la date du cours (sans horaire)
-				echo "<td>" . date('d/m/Y', strtotime($row["date_debut"])) . "</td>";
+				echo "<td> ". $row["date"] ." </td>";
 				
 				// affichage des horaires du cours (utilise la fonction minutes définie plus haut)
-				echo "<td>" . date('H:i', strtotime($row["date_debut"])) . "-" . date('H:i', strtotime('+' . minutes($row["duree"]) . ' minutes', strtotime($row["date_debut"]))) . "</td>";
-				
+				echo "<td>" . $row["heure_debut"] . " - " . $row["heure_fin"] . "</td>";
 				
 				echo "<td>" . $row["cout_credits"] . "</td>";
-				echo "<td>" . $row["nb_places"] . "</td>";
+				
+				$salle = $bdd->query("SELECT * FROM salle WHERE id={$row["id_salle"]};");
+				$r_salle = $salle->fetch(PDO::FETCH_ASSOC);
+				echo "<td>".$r_salle["numero"]." ".$r_salle["rue"]." à ".$r_salle["ville"]."</td>";
+				
+				$nb_places_prises = $bdd->query("SELECT email FROM inscription WHERE id_cours={$row['id']};");
+				echo "<td>" . $nb_places_prises->rowCount() . "/" . $row["nb_places"] . "</td>";
+				
+				$est_inscrit = $bdd->query("SELECT email FROM inscription WHERE id_cours={$row["id"]} AND email='{$_COOKIE['c_email']}';");
+				
+				
+				if ($_COOKIE["c_email"]==$row["email_prof"]){
+					echo "<td>Pas d'inscription à son propre cours</td>";
+				}
+				else if ($est_inscrit->rowCount() > 0){
+					echo "<td>
+						<form method='POST' name='cours' action='action_quitter.php'>
+							<input type='hidden' name='id_cours' placeholder='id_cours' value='{$row['id']}'>
+							<input type='submit' name = 'submit' value=\"Se désinscire\">
+						</form>
+					</td>";
+				}
+				else if ($bdd->query("SELECT email FROM utilisateur WHERE email = '{$_COOKIE["c_email"]}' AND credits<{$row["cout_credits"]};")->rowCount()){
+					echo "<td>Pas assez de credits</td>";
+				}
+				else if (($est_inscrit->rowCount() == 0) and ($bdd->query("SELECT email FROM utilisateur WHERE email = '{$_COOKIE["c_email"]}' AND credits>={$row["cout_credits"]};")->rowCount()) and $nb_places_prises->rowCount()<$row["nb_places"]){
+					echo "<td>
+						<form method='POST' name='cours' action='action_rejoindre.php'>
+							<input type='hidden' name='id_cours' placeholder='id_cours' value='{$row['id']}'>
+							<input type='submit' name = 'submit' value=\"S'inscrire\">
+						</form>
+					</td>";
+				} 
+				else {
+					echo "<td>cours pleins</td>";
+				}
 				echo "</tr>";
 			}
+			echo "</table>";
 		}
-		
-	?>	
-		</table>
-		<h3><u>Qui est-on?</u></h3>
-		<p>
-			Association de danse crée en 20XX, Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			In porttitor varius aliquam. Nulla ut imperdiet metus. Proin at dolor suscipit lacus feugiat scelerisque dictum vitae libero.
-			Cras et libero eget sem lacinia laoreet. Vivamus at congue velit, consectetur lobortis erat. Quisque pretium porttitor tristique.
-			Aliquam erat volutpat. Phasellus non odio egestas, mollis eros vitae, ornare lectus.
-			Vestibulum feugiat, metus non pharetra malesuada, risus quam aliquet velit, quis posuere neque lectus cursus elit.
-			Integer in justo rutrum, pulvinar ex nec, commodo elit. Nullam arcu orci, malesuada non suscipit eget, laoreet sit amet sem.
-			Morbi non metus ut ante mollis varius. Sed a odio congue, finibus odio ut, egestas augue.
-			Vivamus facilisis scelerisque nisi, et hendrerit magna efficitur nec.
-		</p>
-		<?php
 			// vérification des rôles pour les options admin et prof
 			if($connecte) {
 				$result = $bdd->query("SELECT * FROM roles INNER JOIN utilisateur ON utilisateur.email = roles.email WHERE roles.email='".$_COOKIE["c_email"]."' AND mdp='".$_COOKIE["c_password"]."';");
@@ -136,7 +149,7 @@
 				echo "<h3> Options de Professeur </h3>";
 				echo "<ul>";		
 				echo '<li><a href="form_cours.php">Créer un cours</a></li>';
-				echo '<li><a href="">Gérer mes cours</a></li>';
+				echo '<li><a href="form_gerer.php">Gérer mes cours</a></li>';
 				echo "</ul>";
 
 			}

@@ -9,10 +9,11 @@
 
 		$titre = $_POST["titre"];
 		$cout = $_POST["cout"];
-		$date_debut = $_POST["date_debut"];
-		$duree = $_POST["duree"];
-		$places = $_POST["nb_places"];
-		
+		$date = $_POST["date"];
+		$heure_debut = $_POST["heure_debut"];
+		$heure_fin = $_POST["heure_fin"];
+		$nb_places = $_POST["nb_places"];
+		$id_salle = $_POST["id_salle"];
 		
 		$cours_valide = true;
 		
@@ -27,21 +28,39 @@
 		}
 		
 		// VÉRIFICATION DE LA DATE DE DÉBUT
-		// VÉRIFICATION DE LA DISPONIBILITÉ DE LA SALLE
+		if($date < date('Y-m-d H:i:s')) {
+			echo "La date ne peut pas etre inférieur à maitenant<br>";
+			$cours_valide = false;
+		}
 		
-		if($duree <= 10) {
+		//heure_fin > heure_debut
+		if ($heure_fin<$heure_debut){
+			echo "L'heure de fin doit etre plus grande que l'heure de début<br>";
+			$cours_valide = false;
+		}
+		
+		// VÉRIFICATION DE LA DISPONIBILITÉ DE LA SALLE
+		$dispo = $bdd->query("SELECT date FROM cours WHERE ((heure_debut<'$heure_fin' AND heure_debut>='$heure_debut') OR (heure_fin<='$heure_fin' AND heure_fin>'$heure_debut')) AND (id_salle=$id_salle) AND date = $date ;");
+		if ($dispo->rowCount() >= 1){
+			echo "cet horaire est déjà prise<br>";
+			$cours_valide = false;
+		}
+
+		//duree d'au moins 10 min
+		if(strtotime($heure_fin)-strtotime($heure_debut) <= 10) {
 			echo "Le cours doit durer au minimum 10 minutes<br>";
 			$cours_valide = false;
 		}
 		
-		if($places < 1) {
+		if($nb_places < 1) {
 			echo "Le cours doit comporter au minimum une place<br>";
 			$cours_valide = false;
 		}
 		
 		
 		if($cours_valide) {
-			// enregister le nouveau cours....
+			$bdd->query("INSERT INTO cours (titre, cout_credits, email_prof, id_salle, nb_places, date, heure_debut, heure_fin) VALUES ('".$titre."', ".$cout.", '".$_COOKIE["c_email"]."', $id_salle, $nb_places, '$date', '$heure_debut', '$heure_fin');");
+			header("Location: index.php");
 		} else {
 			echo "<strong> informations de cours invalides </strong>";
 		}

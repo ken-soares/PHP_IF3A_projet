@@ -3,8 +3,8 @@
 	include("config.php");
 		
 	if($_POST["password"] == $_POST["password_verif"]) {
-		$presence_email = $bdd->query("SELECT COUNT(email) FROM utilisateur WHERE email ='".$_POST["email"]."';");
-		if($presence_email==0){
+		$presence_email = $bdd->query("SELECT email FROM utilisateur WHERE email ='".$_POST["email"]."';");
+		if($presence_email->rowCount() == 0){
 		$req = $bdd->prepare("INSERT INTO utilisateur (nom,prenom,email,mdp,credits) VALUES (?,?,?,?,0);");
 		$req->execute([$_POST["nom"],$_POST["prenom"], $_POST["email"], $_POST["password"]]);
 		
