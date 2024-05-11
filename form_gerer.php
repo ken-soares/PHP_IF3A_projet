@@ -37,11 +37,13 @@
 			$connecte = true;
 			$result = $bdd->query("SELECT credits FROM utilisateur WHERE email='".$_COOKIE["c_email"]."' AND mdp = '".$_COOKIE["c_password"]."';");
 			$row = $result->fetch();
-		echo "Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
+			echo "<span>";
+			echo "Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
 			echo '<a href="action_deconnexion.php">se deconnecter</a>';
 		} else {
 			echo ' | <a href="form_connexion.php">se connecter</a>';
 		}
+		echo "</span>";
 		if ($connecte){
 			echo "<h2> Liste de mes cours </h2>
 		<table>

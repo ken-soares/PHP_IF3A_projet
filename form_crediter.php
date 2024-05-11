@@ -10,11 +10,14 @@
   <body>
 
 	<h2>Promouvoir/Rétrograder un membre</h2>
-	<form method="POST" name="credit" action="action_crediter.php">
-		<input type="text" name="email" placeholder="email"><br>
-		<input type="number" name="credits"> Crédits à ajouter <br>
-		<input type="submit">
-	</form>
+	<div class="contain">
+		<form method="POST" name="credit" action="action_crediter.php">
+			<input type="text" name="email" placeholder="email"><br>
+			<hr>
+			<label for="crediter"><i>Crédits à ajouter</i><input type="number" name="credits"></label><br>
+			<input type="submit" class="submit">
+		</form>
+	</div>
 
 	<script src="index.js"></script>
   </body>

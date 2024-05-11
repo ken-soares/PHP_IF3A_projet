@@ -6,12 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accueil</title>
     <link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   </head>
   <body>
   
   
 	<!--- style local a la page, modifier dès que possible --->
 	<style>
+	
+	body {
+	
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content:center;
+	background-color: #eee;
+	font-family: 'Verdana', sans-serif;
+	}
+
+	h2 {
+		color: #333;
+	}
 	table, th, td {
 		border: 1px solid;
 		border-collapse:collapse;
@@ -26,7 +42,7 @@
 	
 	
 	<h1>Club de Dance</h1>
-	
+	<span>
 	<?php
 		include("config.php");
 		
@@ -40,8 +56,12 @@
 		echo "Connecté en tant que " . $_COOKIE["c_email"] . " | credits: " .$row["credits"]. " | ";
 			echo '<a href="action_deconnexion.php">se deconnecter</a>';
 		} else {
-			echo ' | <a href="form_connexion.php">se connecter</a>';
+			echo '<a href="form_connexion.php">se connecter</a>';
 		}
+		?>
+		</span>
+	
+		<?php
 		if ($connecte){
 			echo "<h2> Liste des cours ouverts (2 semaines) </h2>
 		<table>
@@ -137,25 +157,35 @@
 			
 			
 			if($connecte && intval($row["est_admin"]) == 1) {
-				
+				echo "<div class=\"admin\">";
 				echo "<h3>Options d'Administrateur</h3>";
 				echo "<ul>";		
 				echo '<li><a href="form_permissions.php">Promouvoir/rétrograder un membre</a></li>';
 				echo '<li><a href="form_crediter.php">créditer un compte</a></li>';
 				echo "</ul>";
+				echo "</div>";
 			}
 			
 			if($connecte && intval($row["est_prof"]) == 1) {
+				echo "<div class=\"prof\">";
 				echo "<h3> Options de Professeur </h3>";
 				echo "<ul>";		
 				echo '<li><a href="form_cours.php">Créer un cours</a></li>';
 				echo '<li><a href="form_gerer.php">Gérer mes cours</a></li>';
 				echo "</ul>";
+				echo "</div>";
 
 			}
 		
 		?>
 	
-	<script src="index.js"></script>
+	<div id="paragraph">
+	<p> Le club de danse PDA est une association crée en 20XX et dont la vocation est de donner des cours de danse à des passionnées de tout âge.
+		Notre site réalisé dans le cadre de l'UV d'IF3A est notre outil principal en terme d'automatisation de création de cours et d'inscription à un cours.
+		Le système de monnaie virtuelle permet aux professeurs de mettre en place leurs propres tarifs par cours.
+	</p>
+	</div>
+	<a id="link" href="" onClick="display_paragraph()">afficher moins</a>
+	<script src="script.js"></script>
   </body>
 </html>

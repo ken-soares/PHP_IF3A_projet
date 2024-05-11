@@ -10,12 +10,15 @@
   <body>
 
 	<h2>Promouvoir/Rétrograder un membre</h2>
+	<div class="contain">
 	<form method="POST" name="promo" action="action_permissions.php">
-		<input type="text" name="email" placeholder="email"> <br>
-		<input type="checkbox" name="admin"> Admin <br>
-		<input type="checkbox" name="prof"> Professeur <br>
-		<input type="submit">
+		<label for="email">Email: <input type="text" name="email" placeholder="email"> </label><br>
+		<hr>
+		<label for="admin">Administrateur<input type="checkbox" name="admin"></label><br>
+		<label for="prof">Professeur<input type="checkbox" name="prof"></label><br>
+		<input type="submit" class="submit">
 	</form>
+	</div>
 
 	<script src="index.js"></script>
   </body>
