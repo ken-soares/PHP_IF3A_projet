@@ -162,6 +162,7 @@
 				echo "<ul>";		
 				echo '<li><a href="form_permissions.php">Promouvoir/rétrograder un membre</a></li>';
 				echo '<li><a href="form_crediter.php">créditer un compte</a></li>';
+				echo '<li><a href="statistiques.php">Statistiques</a></li>';
 				echo "</ul>";
 				echo "</div>";
 			}
