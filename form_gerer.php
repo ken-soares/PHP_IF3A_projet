@@ -84,7 +84,7 @@
 				echo "<td>
 							<form method='POST' name='cours' action='action_supprimer.php'>
 								<input type='hidden' name='id_cours' placeholder='id_cours' value='{$row['id']}'>
-								<input type='submit' name = 'submit' value=\"Suprimer\">
+								<input type='submit' name = 'submit' value=\"Supprimer\">
 							</form>
 						</td>";
 				echo "</tr>";
