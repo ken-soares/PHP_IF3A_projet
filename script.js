@@ -1,15 +1,16 @@
-$("#link").click(function () {
-   event.preventDefault();
-});
-function display_paragraph() {
-	const l = document.getElementById("link");
-	const p = document.getElementById("paragraph");
+// Get the button and paragraph elements
+var button = document.getElementById('show-hide');
+var paragraph = document.getElementById('paragraph');
+
+// Add an event listener to the button
+button.addEventListener('click', function() {
+	// Toggle the visibility of the paragraph
+	paragraph.style.display = (paragraph.style.display === 'block') ? 'none' : 'block';
 	
-	if (p.style.display === "none") {
-		p.style.display = "block";
-		l.innerHTML = "afficher  moins";
+	if(paragraph.style.display == "block") {
+		button.innerHTML = "afficher moins";
+		paragraph.style.display === 'none';
 	} else {
-		p.style.display = "none";
-		l.innerHTML = "description du club";
+		button.innerHTML = "description du club";
 	}
-}
+});

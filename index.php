@@ -6,28 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accueil</title>
     <link rel="stylesheet" href="style.css">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   </head>
   <body>
+
   
   
 	<!--- style local a la page, modifier dès que possible --->
 	<style>
-	
 	body {
 	
 	display:flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content:center;
-	background-color: #eee;
 	font-family: 'Verdana', sans-serif;
 	}
 
-	h2 {
-		color: #333;
-	}
 	table, th, td {
 		border: 1px solid;
 		border-collapse:collapse;
@@ -61,6 +55,8 @@
 		?>
 		</span>
 	
+		<img src="logo.svg" width="5%" height="5%"/>
+
 		<?php
 		if ($connecte){
 			echo "<h2> Liste des cours ouverts (2 semaines) </h2>
@@ -179,14 +175,13 @@
 			}
 		
 		?>
-	
-	<div id="paragraph">
-	<p> Le club de danse PDA est une association crée en 20XX et dont la vocation est de donner des cours de danse à des passionnées de tout âge.
+	<p id="paragraph"> Le club de danse PDA est une association crée en 20XX et dont la vocation est de donner des cours de danse à des passionnées de tout âge.
 		Notre site réalisé dans le cadre de l'UV d'IF3A est notre outil principal en terme d'automatisation de création de cours et d'inscription à un cours.
 		Le système de monnaie virtuelle permet aux professeurs de mettre en place leurs propres tarifs par cours.
 	</p>
-	</div>
-	<a id="link" href="" onClick="display_paragraph()">afficher moins</a>
-	<script src="script.js"></script>
+	<button id="show-hide">description du club</button>
   </body>
+  
+  	<script src="script.js">
+	</script>
 </html>

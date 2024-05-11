@@ -1,10 +1,13 @@
 :root {
-	/* From rosepine color palette */
-	--blue: #3e8fb0;
-	--pink: #eb6f92;
-	--yellow: #f6c177;
-	--iris: #c4a7e7;
-	--overlay: #f2e9e1;
+	/* From gruvbox color palette */
+	--gray:#665c54;
+	--dark: #282828;
+	--darker:#32302f;
+	--darkest:#1d2021;
+	--light:#fbf1c7;
+	--yellow: #fabd2f;
+	--orange:#fe8019;
+	--blue: #458588;
 }
 
 
@@ -14,36 +17,40 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content:center;
-	background-color: #eee;
+	background-color: var(--dark);
 	font-family: 'Verdana', sans-serif;
+	color: var(--light);
 }
 
 h2 {
-	color: #333;
+	color: var(--light);
 }
 
 .contain h3 {
-	color: #eee;
+	color: var(--gray);
 }
+
 
 a {
 	margin: 50px;
+	color: var(--blue);
 }
 
 a:hover {
 	transition: 0.5s;
-	color: var(--blue);
+	color: var(--yellow);
 }
 
 .contain {
 	align-items:center;
 	text-align:center;
-	background-color: var(--blue);
+	background-color: var(--darkest);
 	padding-top: 2%;
 	padding-bottom: 0;
 	width: 15%;
 	height: 15%;
 	border-radius:20px;
+	color: var(--gray);
 }
 
 hr {
@@ -68,14 +75,14 @@ li {
 }
 
 label {
-	color:#eee;
 	font-size:12px;
+	font-weight:bold;
 }
 
 .admin {
 	align-items:center;
 	text-align:center;
-	background-color: var(--yellow);
+	background-color: var(--orange);
 	padding-top: 2%;
 	margin-left: 2%;
 	padding-bottom: 0;
@@ -89,7 +96,7 @@ label {
 .prof {
 	align-items:center;
 	text-align:center;
-	background-color: var(--pink);
+	background-color: var(--yellow);
 	padding-top: 2%;
 	margin-right: 2%;
 	padding-bottom: 0;
@@ -99,7 +106,7 @@ label {
 }
 
 .prof a {
-	color: var(--yellow);
+	color:var(--gray);
 	font-family:"Verdana", sans-serif;
 	margin:0px;
 	font-size: 14px;
@@ -109,7 +116,7 @@ label {
 
 
 .admin a {
-	color:var(--pink);
+	color: var(--darkest);
 	font-family:"Verdana", sans-serif;
 	margin:0px;
 	display: inline-block;
@@ -126,8 +133,17 @@ select {
 #paragraph {
 	text-align:justify;
 	width:70%;
+	display:none;
 }
 
-#paragraph {
-	display:none;
+#show-hide {
+	border:none;
+	cursor: pointer;
+	font-style:italic;
+	margin:10px;
+}
+
+img {
+	margin-top: 20px;
+	filter: invert(99%) sepia(30%) saturate(5984%) hue-rotate(296deg) brightness(132%) contrast(97%);
 }
